@@ -7,7 +7,7 @@ on:
       - '*'
     tags:
       - '*'
-      
+
   workflow_dispatch:
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       - name: Build and push auth microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./restauranty-project/backend/auth"
+          context: "backend/auth"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/auth:${{ env.IMAGE_TAG }}
@@ -37,7 +37,7 @@ jobs:
       - name: Build and push discounts microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./restauranty-project/backend/discounts"
+          context: "backend/discounts"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/discounts:${{ env.IMAGE_TAG }}
@@ -46,7 +46,7 @@ jobs:
       - name: Build and push items microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./Multi-Stack-Voting-Application/backend/items"
+          context: "backend/items"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/items:${{ env.IMAGE_TAG }}
@@ -55,7 +55,7 @@ jobs:
       - name: Build and push client microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./Multi-Stack-Voting-Application/client"
+          context: "client"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/client:${{ env.IMAGE_TAG }}
