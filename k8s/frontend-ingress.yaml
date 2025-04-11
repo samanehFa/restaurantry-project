@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+spec:
+  ingressClassName: nginx 
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: client-frontend-service
+                port:
+                  number: 80
+          - path: /api/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-backend-service
+                port:
+                  number: 3001
+          - path: /api/discounts
+            pathType: Prefix
+            backend:
+              service:
+                name: discount-backend-service
+                port:
+                  number: 3002
+          - path: /api/items
+            pathType: Prefix
+            backend:
+              service:
+                name: item-backend-service
+                port:
+                  number: 3003
