@@ -16,4 +16,7 @@ spec:
       - name: client-container
         image: valerietxh/client-frontend:latest
         ports:
-        - containerPort: 80
+          - containerPort: 80
+        envFrom:
+          - secretRef:
+              name: client-secret
