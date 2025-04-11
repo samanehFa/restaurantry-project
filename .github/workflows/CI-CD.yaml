@@ -110,3 +110,7 @@ jobs:
       - name: Deploy to EKS
         run: |
           kubectl apply -f k8s/
+      
+      - name: Restart All Deployments to Pull Latest Image
+        run: |
+          kubectl get deployments -o name | xargs kubectl rollout restart
