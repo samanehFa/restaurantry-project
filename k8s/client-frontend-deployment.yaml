@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-frontend
+  template:
+    metadata:
+      labels:
+        app: client-frontend
+    spec:
+      containers:
+      - name: client-container
+        image: valerietxh/client-frontend:latest
+        ports:
+        - containerPort: 80

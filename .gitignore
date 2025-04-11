@@ -11,4 +11,5 @@ node_modules
 backend/.env.total
 k8s/auth-secret.yaml
 k8s/discount-secret.yaml
+k8s/client-secret.yaml
 *secret*
