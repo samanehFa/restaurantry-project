@@ -4,9 +4,10 @@ run-name: ${{ github.actor }} is Deploying
 on:
   push:
     branches:
-      - main
+      - '*'
     tags:
       - '*'
+      
   workflow_dispatch:
 
 jobs:
