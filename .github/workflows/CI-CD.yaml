@@ -4,9 +4,10 @@ run-name: ${{ github.actor }} is Deploying
 on:
   push:
     branches:
-      - main
+      - '*'
     tags:
       - '*'
+
   workflow_dispatch:
 
 jobs:
@@ -27,7 +28,7 @@ jobs:
       - name: Build and push auth microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./restauranty-project/backend/auth"
+          context: "backend/auth"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/auth:${{ env.IMAGE_TAG }}
@@ -36,7 +37,7 @@ jobs:
       - name: Build and push discounts microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./restauranty-project/backend/discounts"
+          context: "backend/discounts"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/discounts:${{ env.IMAGE_TAG }}
@@ -45,7 +46,7 @@ jobs:
       - name: Build and push items microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./Multi-Stack-Voting-Application/backend/items"
+          context: "backend/items"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/items:${{ env.IMAGE_TAG }}
@@ -54,7 +55,7 @@ jobs:
       - name: Build and push client microservice
         uses: docker/build-push-action@v6
         with:
-          context: "./Multi-Stack-Voting-Application/client"
+          context: "client"
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/client:${{ env.IMAGE_TAG }}
@@ -91,18 +92,21 @@ jobs:
           export CLIENT_IMAGE="docker.io/${{ secrets.DOCKER_USERNAME }}/restaurantry-client:${{ env.IMAGE_TAG }}"
 
           # Replace placeholders in deployment templates
-          envsubst < auth-backend-deployment.yaml > auth-backend-deployment.yaml
-          envsubst < client-frontend-deployment.yaml > client-frontend-deployment.yaml
-          envsubst < discount-backend-deployment.yaml > discount-backend-deployment.yaml
+          envsubst < k8s/auth-backend-deployment.yaml > k8s/auth-backend-deployment.yaml
+          envsubst < k8s/client-frontend-deployment.yaml > k8s/client-frontend-deployment.yaml
+          envsubst < k8s/discount-backend-deployment.yaml > k8s/discount-backend-deployment.yaml
+          envsubst < k8s/items-backend-deployment.yaml > k8s/items-backend-deployment.yaml
 
           # Debugging: Print final deployment files
           echo "Final auth-backend-deployment.yaml:"
-          cat auth-backend-deployment.yaml
-          echo "Final auth-backend-deployment.yaml:"
-          cat auth-backend-deployment.yaml
-          echo "Final auth-backend-deployment.yaml:"
-          cat auth-backend-deployment.yaml
+          cat k8s/auth-backend-deployment.yaml
+          echo "Final client-frontend-deployment.yaml:"
+          cat k8s/client-frontend-deployment.yaml
+          echo "Final discount-backend-deployment.yaml:"
+          cat k8s/discount-backend-deployment.yaml
+          echo "Final items-backend-deployment.yaml:"
+          cat k8s/items-backend-deployment.yaml
 
       - name: Deploy to EKS
         run: |
-          kubectl apply -f .
+          kubectl apply -f k8s/
