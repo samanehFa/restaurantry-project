@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-backend
+  template:
+    metadata:
+      labels:
+        app: auth-backend
+    spec:
+      containers:
+        - name: auth-container
+          image: samanehfa/auth-backend:latest
+          ports:
+            - containerPort: 3001
+          envFrom:
+            - secretRef:
+                name: auth-secret
