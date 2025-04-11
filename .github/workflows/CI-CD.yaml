@@ -95,14 +95,17 @@ jobs:
           envsubst < k8s/auth-backend-deployment.yaml > k8s/auth-backend-deployment.yaml
           envsubst < k8s/client-frontend-deployment.yaml > k8s/client-frontend-deployment.yaml
           envsubst < k8s/discount-backend-deployment.yaml > k8s/discount-backend-deployment.yaml
+          envsubst < k8s/items-backend-deployment.yaml > k8s/items-backend-deployment.yaml
 
           # Debugging: Print final deployment files
           echo "Final auth-backend-deployment.yaml:"
           cat auth-backend-deployment.yaml
-          echo "Final auth-backend-deployment.yaml:"
-          cat auth-backend-deployment.yaml
-          echo "Final auth-backend-deployment.yaml:"
-          cat auth-backend-deployment.yaml
+          echo "Final client-frontend-deployment.yaml:"
+          cat client-frontend-deployment.yaml
+          echo "Final discount-backend-deployment.yaml:"
+          cat discount-backend-deployment.yaml
+          echo "Final items-backend-deployment.yaml:"
+          cat items-backend-deployment.yaml
 
       - name: Deploy to EKS
         run: |
