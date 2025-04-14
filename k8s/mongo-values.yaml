@@ -1,0 +1,17 @@
+architecture: standalone
+
+auth:
+  enabled: false
+
+replicaCount: 1 
+
+persistence:
+  enabled: true
+  storageClass: gp2 
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+
+service:
+  type: ClusterIP
+  port: 27017
