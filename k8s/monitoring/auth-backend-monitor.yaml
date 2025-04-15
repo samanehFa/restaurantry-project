@@ -5,10 +5,10 @@ metadata:
   labels:
     release: prometheus-stack
 spec:
-  selector:
   namespaceSelector:
     matchNames:
     - val-ns-4
+  selector:
     matchLabels:
       app: auth-backend
   endpoints:
