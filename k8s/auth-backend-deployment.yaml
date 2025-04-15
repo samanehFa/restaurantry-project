@@ -15,6 +15,7 @@ spec:
       containers:
         - name: auth-container
           image: samanehfa/auth-backend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3001
           envFrom:

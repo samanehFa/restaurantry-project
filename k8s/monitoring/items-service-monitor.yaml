@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: items-service-monitor
+  labels:
+    release: prometheus-stack
+spec:
+  namespaceSelector:
+    matchNames:
+      - val-ns-4
+  selector:
+    matchLabels:
+      app: items-service
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
