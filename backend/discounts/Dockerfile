@@ -1,18 +1,28 @@
-FROM node:23-alpine
+# ----------- Stage 1: Builder -----------
+    FROM node:18 AS builder
 
-WORKDIR /usr/src/app
+    WORKDIR /app
 
-COPY package*.json ./
+    COPY package*.json ./
+    
+    RUN npm install
+    
+    COPY . .
+    
+    # ----------- Stage 2: Production Image -----------
 
-RUN apk update && apk add --no-cache \
-    && rm -rf /var/cache/apk/*
+    FROM node:18-slim AS production
+    
+    ENV NODE_ENV=production
+    ENV PORT=3002
+    
+    WORKDIR /app
+    
+    COPY --from=builder /app .
+    
+    RUN npm install --omit=dev
+    
+    EXPOSE 3002
 
-RUN npm install && \
-    npm cache clean --force && \
-    mv /usr/src/app/node_modules /node_modules
-
-COPY . .
-
-EXPOSE 3002
-
-CMD ["npm", "start"]
+    CMD ["node", "server.js"]
+    
