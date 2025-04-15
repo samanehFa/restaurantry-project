@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: discount-backend-monitor
+  labels:
+    release: prometheus-stack
+spec:
+  namespaceSelector:
+    matchNames:
+      - val-ns-4
+  selector:
+    matchLabels:
+      app: discount-backend
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
