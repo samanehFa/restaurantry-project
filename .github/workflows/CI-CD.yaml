@@ -110,7 +110,17 @@ jobs:
       - name: Deploy to EKS
         run: |
           kubectl apply -f k8s/
-      
+
+      - name: Deploy MongoDB via Helm (OCI)
+        run: |
+          helm registry login registry-1.docker.io \
+            --username ${{ secrets.DOCKER_USERNAME }} \
+            --password ${{ secrets.DOCKER_PASSWORD }}
+
+          helm install mongo-release oci://registry-1.docker.io/bitnamicharts/mongodb \
+            --namespace val-ns-4 \
+            -f helm/mongo-values.yaml
+
       - name: Restart All Deployments to Pull Latest Image
         run: |
           kubectl get deployments -o name | xargs kubectl rollout restart
