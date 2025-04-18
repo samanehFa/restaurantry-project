@@ -117,7 +117,7 @@ jobs:
             --username ${{ secrets.DOCKER_USERNAME }} \
             --password ${{ secrets.DOCKER_PASSWORD }}
 
-          helm install mongo-release oci://registry-1.docker.io/bitnamicharts/mongodb \
+          helm upgrade --install mongo-release oci://registry-1.docker.io/bitnamicharts/mongodb \
             --namespace val-ns-4 \
             -f helm/mongo-values.yaml
 
